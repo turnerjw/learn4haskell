@@ -552,10 +552,11 @@ Casual reminder about adding top-level type signatures for all functions :)
 -}
 
 mid :: Ord a => a -> a -> a -> a
-mid x y z
-  | (y < x && x < z) || (z < x && x < y) = x
-  | (x < y && y < z) || (z < y && y < x) = y
-  | (x < z && z < y) || (y < z && z < x) = z
+mid x y z 
+  | (y < x && x < z) || (z < x && x < y) || (x == y && x /= z) || (x == z && x /= y) = x
+  | (x < y && y < z) || (z < y && y < x) || (y == x && y /= z) || (y == z && y /= x) = y
+  | (x < z && z < y) || (y < z && z < x) || (z == x && z /= y) || (z == y && z /= x) = z
+  | x == y && y == z = x -- all the same
 
 {- |
 =⚔️= Task 8
@@ -639,8 +640,9 @@ specifying complex expressions.
 
 sumLast2 :: Int -> Int
 sumLast2 n = 
-  let lastNum = n `mod` 10
-      secondLastNum = ((n `mod` 100) - lastNum) `div` 10
+  let absN = abs n
+      lastNum = absN `mod` 10
+      secondLastNum = ((absN `mod` 100) - lastNum) `div` 10
   in lastNum + secondLastNum
 
 
@@ -664,10 +666,11 @@ aren't ready for this boss yet!
 
 firstDigit :: Int -> Int
 firstDigit n
-  | n < 10 = n
+  | (abs n) < 10 = (abs n)
   | otherwise = 
-    let l = n `mod` 10
-        newNum = (n - l) `div` 10
+    let absN = abs n
+        l = absN `mod` 10
+        newNum = (absN - l) `div` 10
     in firstDigit newNum
 
 
