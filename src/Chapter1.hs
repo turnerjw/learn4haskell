@@ -551,7 +551,11 @@ value after "=" where the condition is true.
 Casual reminder about adding top-level type signatures for all functions :)
 -}
 
-mid x y z = error "mid: not implemented!"
+mid :: Ord a => a -> a -> a -> a
+mid x y z
+  | (y < x && x < z) || (z < x && x < y) = x
+  | (x < y && y < z) || (z < y && y < x) = y
+  | (x < z && z < y) || (y < z && z < x) = z
 
 {- |
 =⚔️= Task 8
