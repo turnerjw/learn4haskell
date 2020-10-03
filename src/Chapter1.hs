@@ -16,7 +16,7 @@ Composition Warlock, and many more!
 
 Here is how it works:
 
- ★ Make sure that you familiarize yourself with this repo's README in order to
+ ★ Make sure that you familiarise yourself with this repo's README in order to
    understand why and what we are trying to achieve with this.
  ★ For each Chapter, learn the material that we provide and try to solve each
    task proposed to consolidate the results.
@@ -487,7 +487,7 @@ Implement a function that returns the last digit of a given number.
 -}
 -- DON'T FORGET TO SPECIFY THE TYPE IN HERE
 lastDigit :: Integral a => a -> a
-lastDigit n = mod n 10
+lastDigit n = mod (abs n) 10
 
 
 {- |
