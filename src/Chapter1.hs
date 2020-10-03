@@ -569,7 +569,11 @@ True
 >>> isVowel 'x'
 False
 -}
-isVowel c = error "isVowel: not implemented!"
+
+isVowel :: Char -> Bool
+isVowel c
+  | c `elem` ['a', 'e', 'i', 'o', 'u'] = True
+  | otherwise = False
 
 
 {- |
