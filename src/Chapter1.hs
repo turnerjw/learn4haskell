@@ -662,7 +662,13 @@ You need to use recursion in this task. Feel free to return to it later, if you
 aren't ready for this boss yet!
 -}
 
-firstDigit n = error "firstDigit: Not implemented!"
+firstDigit :: Int -> Int
+firstDigit n
+  | n < 10 = n
+  | otherwise = 
+    let l = n `mod` 10
+        newNum = (n - l) `div` 10
+    in firstDigit newNum
 
 
 {-
