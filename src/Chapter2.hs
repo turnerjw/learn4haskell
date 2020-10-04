@@ -873,7 +873,10 @@ list.
 
 🕯 HINT: Use the 'cycle' function
 -}
-rotate = error "rotate: Not implemented!"
+rotate :: Int -> [a] -> [a]
+rotate n l
+  | n < 0 = l
+  | otherwise = take (length l) (drop n (cycle l))
 
 {- |
 =💣= Task 12*
@@ -889,7 +892,10 @@ and reverses it.
   function, but in this task, you need to implement it manually. No
   cheating!
 -}
-rewind = error "rewind: Not Implemented!"
+
+rewind :: [a] -> [a]
+rewind [] = []
+rewind (x:xs) = (rewind xs) ++ [x]
 
 
 {-
