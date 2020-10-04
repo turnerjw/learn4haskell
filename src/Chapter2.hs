@@ -351,7 +351,7 @@ ghci> :l src/Chapter2.hs
 -}
 subList :: Int -> Int -> [a] -> [a]
 subList start end list
-  | length list == 0 || start >= end || start < 0 || end < 0 || start > length list || end > length list = []
+  | length list == 0 || start > end || start < 0 || end < 0 || start > length list = []
   | otherwise =
     let trimmedList = drop start list
         selectionLength = end - start + 1
@@ -875,7 +875,7 @@ list.
 -}
 rotate :: Int -> [a] -> [a]
 rotate n l
-  | n < 0 = l
+  | n < 0 = []
   | otherwise = take (length l) (drop n (cycle l))
 
 {- |
