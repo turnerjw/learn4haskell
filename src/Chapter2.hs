@@ -368,7 +368,10 @@ Implement a function that returns only the first half of a given list.
 "b"
 -}
 -- PUT THE FUNCTION TYPE IN HERE
-firstHalf l = error "firstHalf: Not implemented!"
+firstHalf :: [a] -> [a]
+firstHalf l = 
+  let halfLength = (length l) `div` 2
+  in take halfLength l
 
 
 {- |
