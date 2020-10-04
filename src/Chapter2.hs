@@ -350,7 +350,12 @@ from it!
 ghci> :l src/Chapter2.hs
 -}
 subList :: Int -> Int -> [a] -> [a]
-subList = error "subList: Not implemented!"
+subList start end list
+  | length list == 0 || start >= end || start < 0 || end < 0 || start > length list || end > length list = []
+  | otherwise =
+    let trimmedList = drop start list
+        selectionLength = end - start + 1
+     in take selectionLength trimmedList
 
 {- |
 =⚔️= Task 4
