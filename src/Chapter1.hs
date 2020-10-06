@@ -556,7 +556,7 @@ mid x y z
   | (y < x && x < z) || (z < x && x < y) || (x == y && x /= z) || (x == z && x /= y) = x
   | (x < y && y < z) || (z < y && y < x) || (y == x && y /= z) || (y == z && y /= x) = y
   | (x < z && z < y) || (y < z && z < x) || (z == x && z /= y) || (z == y && z /= x) = z
-  | x == y && y == z = x -- all the same
+  | otherwise = x -- all the same
 
 {- |
 =⚔️= Task 8
