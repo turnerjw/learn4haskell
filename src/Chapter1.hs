@@ -573,7 +573,11 @@ False
 
 isVowel :: Char -> Bool
 isVowel c
-  | c `elem` ['a', 'e', 'i', 'o', 'u'] = True
+  | c == 'a' = True
+  | c == 'e' = True
+  | c == 'i' = True
+  | c == 'o' = True
+  | c == 'u' = True
   | otherwise = False
 
 
@@ -639,11 +643,11 @@ specifying complex expressions.
 -}
 
 sumLast2 :: Int -> Int
-sumLast2 n = 
+sumLast2 n =
   let absN = abs n
-      lastNum = absN `mod` 10
-      secondLastNum = ((absN `mod` 100) - lastNum) `div` 10
-  in lastNum + secondLastNum
+      lastNum = lastDigit absN
+      secondLastNum = (absN `mod` 100) `div` 10
+   in lastNum + secondLastNum
 
 
 {- |
@@ -666,13 +670,12 @@ aren't ready for this boss yet!
 
 firstDigit :: Int -> Int
 firstDigit n
-  | (abs n) < 10 = (abs n)
-  | otherwise = 
-    let absN = abs n
-        l = absN `mod` 10
-        newNum = (absN - l) `div` 10
-    in firstDigit newNum
-
+  | (absN) < 10 = (absN)
+  | otherwise =
+    let newNum = (absN) `div` 10
+     in firstDigit newNum
+  where
+    absN = abs n
 
 {-
 You did it! Now it is time to the open pull request with your changes
