@@ -344,6 +344,12 @@ of a book, but you are not limited only by the book properties we described.
 Create your own book type of your dreams!
 -}
 
+data Book = MkBook
+  { bookTitle :: String,
+    bookAuthor :: String
+  }
+  deriving (Show)
+
 {- |
 =⚔️= Task 2
 
@@ -373,6 +379,24 @@ after the fight. The battle has the following possible outcomes:
    doesn't earn any money and keeps what they had before.
 
 -}
+
+data Knight = MkKnight
+  { knightHealth :: Int,
+    knightAttack :: Int,
+    knightGold :: Int
+  }
+
+data Monster = MkMonster
+  { monsterHealth :: Int,
+    monsterAttack :: Int,
+    monsterGold :: Int
+  }
+
+fight :: Knight -> Monster -> Int
+fight (MkKnight kHealth kAttack kGold) (MkMonster mHealth mAttack mGold)
+  | kAttack >= mHealth = kGold + mGold -- Knight wins
+  | mAttack >= kHealth = -1 -- Knight does not win and Monster wins
+  | otherwise = kGold -- Neither win
 
 {- |
 =🛡= Sum types
@@ -460,6 +484,8 @@ Create a simple enumeration for the meal types (e.g. breakfast). The one who
 comes up with the most number of names wins the challenge. Use your creativity!
 -}
 
+data Meal = Breakfast | Lunch | Dinner | Brunch | Snack | Supper
+
 {- |
 =⚔️= Task 4
 
@@ -479,6 +505,56 @@ After defining the city, implement the following functions:
    complicated task, walls can be built only if the city has a castle
    and at least 10 living people inside
 -}
+data CastleAndWalls
+  = NoCastle
+  | Castle String
+  | CastleAndWalls String
+
+data ChurchOrLibrary
+  = Church
+  | Library
+
+data House
+  = OnePerson
+  | TwoPeople
+  | ThreePeople
+  | FourPeople
+
+data City = MkCity
+  { cityCastleAndWalls :: CastleAndWalls,
+    cityChurchOrLibrary :: ChurchOrLibrary,
+    cityHouses :: [House]
+  }
+
+buildCastle :: City -> String -> City
+buildCastle city castleName =
+  let newCastle = case cityCastleAndWalls city of
+        CastleAndWalls _ -> CastleAndWalls castleName
+        _ -> Castle castleName
+   in city {cityCastleAndWalls = newCastle}
+
+buildHouse :: City -> House -> City
+buildHouse city house = city {cityHouses = house : cityHouses city}
+
+buildWalls :: City -> City
+buildWalls city =
+  let newCastle = case cityCastleAndWalls city of
+        Castle castleName ->
+          if getCityPopulation city >= 10
+            then CastleAndWalls castleName
+            else Castle castleName
+        _ -> cityCastleAndWalls city
+   in city {cityCastleAndWalls = newCastle}
+  where
+    getPersonCount :: House -> Int
+    getPersonCount house = case house of
+      OnePerson -> 1
+      TwoPeople -> 2
+      ThreePeople -> 3
+      FourPeople -> 4
+
+    getCityPopulation :: City -> Int
+    getCityPopulation c = sum (map getPersonCount (cityHouses c))
 
 {-
 =🛡= Newtypes
